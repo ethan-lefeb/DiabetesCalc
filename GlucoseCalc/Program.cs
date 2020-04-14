@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,8 +28,6 @@ namespace GlucoseCalc
 
 
             // The actual calculations are happening here.
-            
-            
             int preventOverdose = desiredGlucose / glucoseRatio;
             int glucoseUnits = patientGlucose / glucoseRatio - preventOverdose;
             int carbohydrateUnits = mealCarbs / carbohydrateRatio;
@@ -37,6 +36,21 @@ namespace GlucoseCalc
             // Showing the results of the calculations to the user.
             Console.WriteLine("The total units of insulin you should take is: " + totalUnits);
             Console.ReadLine();
-    }
+            Console.WriteLine("Would you like to [s]ave a log of this result, or [n]o?");
+
+            ConsoleKeyInfo confirmation = Console.ReadKey();
+            if (confirmation.Key.ToString() == "s")
+            {
+                string docPath =
+                  Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, DateTime.Now + " log.txt")))
+                {
+
+                    outputFile.WriteLine("On " + DateTime.Now + ", I was" + patientGlucose + ", I ingested " + mealCarbs + ", and to counteract this, I took " + totalUnits + " worth of insulin.");
+                }
+                Console.ReadLine();
+            }
+        }
     }
 }
