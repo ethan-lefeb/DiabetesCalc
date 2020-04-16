@@ -41,13 +41,13 @@ namespace GlucoseCalc
             ConsoleKeyInfo confirmation = Console.ReadKey();
             if (String.Equals(confirmation.Key.ToString(), "s", StringComparison.CurrentCultureIgnoreCase))
             {
-
-                using (FileStream fs = new FileStream("C:\\Users\\ethan\\Documents\\Test Folder\\log.txt"
+                string time = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss"); // clean, contains time and sortable
+                using (FileStream fs = new FileStream($"C:\\Users\\ethan\\Documents\\Test Folder\\log-{time}.txt"
                         , FileMode.OpenOrCreate
                         , FileAccess.ReadWrite))
                 {
                 StreamWriter tw = new StreamWriter(fs);
-                    tw.Write("On " + DateTime.Now + ", I was " + patientGlucose + ", I ingested " + mealCarbs + ", and to counteract this, I took " + totalUnits + " worth of insulin.");
+                    tw.Write($"On {DateTime.Now}, I was {patientGlucose}, I ingested {mealCarbs}, and to counteract this, I took {totalUnits} units worth of insulin." + patientGlucose + mealCarbs + totalUnits);
                     tw.Flush();
                 }
             }
