@@ -39,18 +39,17 @@ namespace GlucoseCalc
             Console.WriteLine("Would you like to [s]ave a log of this result, or [n]o?");
 
             ConsoleKeyInfo confirmation = Console.ReadKey();
-            if (confirmation.Key.ToString() == "s")
+            if (String.Equals(confirmation.Key.ToString(), "s", StringComparison.CurrentCultureIgnoreCase))
             {
 
-                using (FileStream fs = new FileStream("C:\\Users\\ethan\\Documents\\Test Folder"
-                    , FileMode.OpenOrCreate
-                    , FileAccess.ReadWrite))
+                using (FileStream fs = new FileStream("C:\\Users\\ethan\\Documents\\Test Folder\\log.txt"
+                        , FileMode.OpenOrCreate
+                        , FileAccess.ReadWrite))
                 {
-                    StreamWriter tw = new StreamWriter(fs);
-                    tw.Write("On " + DateTime.Now + ", I was" + patientGlucose + ", I ingested " + mealCarbs + ", and to counteract this, I took " + totalUnits + " worth of insulin.");
+                StreamWriter tw = new StreamWriter(fs);
+                    tw.Write("On " + DateTime.Now + ", I was " + patientGlucose + ", I ingested " + mealCarbs + ", and to counteract this, I took " + totalUnits + " worth of insulin.");
                     tw.Flush();
                 }
-                Console.ReadLine();
             }
         }
     }
